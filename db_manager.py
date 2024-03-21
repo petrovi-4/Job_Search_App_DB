@@ -36,7 +36,7 @@ class DBManager:
             USING (employer_id)"""
         )
         rows = self.cur.fetchall()
-        return rows[0][0]
+        return rows
 
     def get_avg_salary(self):
         """
@@ -57,7 +57,7 @@ class DBManager:
             """SELECT job_title 
             FROM vacancies
             WHERE salary > (SELECT CEILING(AVG(salary)) 
-            FROM vacacies)"""
+            FROM vacancies)"""
         )
         rows = self.cur.fetchall()
         return rows

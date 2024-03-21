@@ -22,13 +22,12 @@ def main():
         key += 1
 
     params = config()
-    db_name = 'HH_vacancies_db'
+    db_name = 'my_db'
 
     create_database(params, db_name)
     print("База данных успешно создана")
     params.update({'dbname': db_name})
 
-    conn = None
     try:
         with psycopg2.connect(**params) as conn:
             with conn.cursor() as cur:
@@ -38,10 +37,8 @@ def main():
                 print('Таблица vacancies создана успешно')
                 insert_data(cur, employers, vacancies)
                 print('Данные в таблицы добавлены успешно')
-
-    except (Exception, psycopg2.DatabaseError) as error:
+    except(Exception, psycopg2.DatabaseError) as error:
         print(error)
-
     finally:
         if conn is not None:
             conn.close()
@@ -61,7 +58,7 @@ def main():
     print(request_3)
 
     print(
-        '\Список всех вакансий, у которых зарплата выше средней по всем '
+        '\nСписок всех вакансий, у которых зарплата выше средней по всем '
         'вакансиям:'
     )
     request_4 = DBManager(params).get_vacancies_with_higher_salary()
@@ -69,7 +66,7 @@ def main():
         print(row[0])
 
     keyword = 'Python разработчик'
-    print(f'\Список всех вакансий в которых содержится "{keyword}":')
+    print(f'\nСписок всех вакансий в которых содержится "{keyword}":')
     request_5 = DBManager(params).get_vacancies_with_keyword(keyword)
     for row in request_5:
         print(row[0])
